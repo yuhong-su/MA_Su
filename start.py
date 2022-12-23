@@ -2,9 +2,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 ## command to install all the packages
 ## pip3 install -r requirements.txt
+## pip freeze > requirements.txt
 
 ## run the project 
-## python3 start.py
+## python start.py
 
 
 
@@ -13,6 +14,7 @@ import pandas as pd
 # plt.xlabel('x numbers')
 
 # plt.show()
-data = pd.read_excel('/home/baohui/Desktop/thesis_project/data/sample.xlsx')
+
+data = pd.read_excel('data\sample.xlsx')
 df = pd.DataFrame(data, columns=['product_name','price'])
 print(df)
