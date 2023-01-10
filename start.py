@@ -12,9 +12,9 @@ import math
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator
 import numpy as np
+# C:\Users\lenovo\Desktop\yuhong_thesis\data\sample.xlsx
 
-
-data = pd.read_excel('/home/baohui/Desktop/thesis_project/data/sample.xlsx')
+data = pd.read_excel('data\sample.xlsx')
 sensor_values=pd.DataFrame(data, columns=['s1','s2'])
 df = pd.DataFrame(data, columns=['s1','s2']).to_numpy()
 
@@ -34,8 +34,8 @@ def plot(s1,s2,h_min_array):
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
     print('plot',s1,s2,h_min_array)
     # Make data.
-    X = np.arange(-5, 5, 0.25)
-    Y = np.arange(-5, 5, 0.25)
+    X = np.arange(5000, 15000, 100)
+    Y = np.arange(5000, 15000, 100)
     X, Y = np.meshgrid(X, Y)
     R = np.sqrt(X**2 + Y**2)
     Z = np.sin(R)
@@ -67,37 +67,37 @@ def plot(s1,s2,h_min_array):
     plt.show()
 
 
-theta1=0.7854
-theta2=0.7854
+theta1 = math.pi/4
+theta2 = math.pi/4
 D=85000
 d=80000
 a1=5000
 a2=5000
 
 def getVariables(s1,s2):
-    X_Q= (D/2-(s2-a2))*math.sin(theta2)
+    X_Q = (D/2-(s2-a2))*math.sin(theta2)
     print('X_Q',X_Q)
-    X_P= -(D/2-(s1-a1))*math.sin(theta1)
+    X_P = -(D/2-(s1-a1))*math.sin(theta1)
     print('X_P',X_P)
-    Y_Q= -X_Q*math.tan(math.pi/2-theta2)
+    Y_Q = -X_Q*math.tan(math.pi/2-theta2)
     print('Y_Q',Y_Q)
-    Y_P=X_P*math.tan(math.pi/2-theta1)
+    Y_P =X_P*math.tan(math.pi/2-theta1)
     print('Y_P',Y_P)
-    fi=math.atan((Y_P-Y_Q)/X_Q-X_P)
+    fi = math.atan((Y_P-Y_Q)/(X_Q-X_P))
     print('fi',fi)
-    b= math.sqrt(math.pow((X_P-X_Q),2)+math.pow((Y_P-Y_Q),2))
+    b= math.sqrt(math.pow((X_P-X_Q),2)+math.pow((Y_P-Y_Q),2)) / 2
     print('b',b)
     # x − This must be a numeric value in the range -1 to 1. If x is greater than 1 then it will generate an error.
     # beta= math.acos(2b/d)
-    beta=math.acos(0.5)
+    beta=math.acos(2*b/d)
     print('beta',beta)
-    alpha= math.pi-fi-beta
+    alpha= math.pi/2-fi-beta
     print('alpha',alpha)
-    X_Q1=X_Q-(d/2)*math.sin(alpha)
-    print('X_Q1',X_Q1)
-    Y_Q1=Y_Q+(d/2)*math.cos(alpha)
-    print('Y_Q1',Y_Q1)
-    h_min=D/2- (math.sqrt(math.pow((X_Q1),2)+math.pow((Y_Q1),2)))-d/2
+    X_O1=X_Q-(d/2)*math.sin(alpha)
+    print('X_O1',X_O1)
+    Y_O1=Y_Q+(d/2)*math.cos(alpha)
+    print('Y_O1',Y_O1)
+    h_min=D/2- (math.sqrt(math.pow((X_O1),2)+math.pow((Y_O1),2)))-d/2
     print('h_min',h_min)
     return h_min
 
