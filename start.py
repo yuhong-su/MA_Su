@@ -14,7 +14,7 @@ from matplotlib.ticker import LinearLocator
 import numpy as np
 # C:\Users\lenovo\Desktop\yuhong_thesis\data\sample.xlsx
 
-data = pd.read_excel('data\sample.xlsx')
+data = pd.read_excel('data/sample.xlsx')
 sensor_values=pd.DataFrame(data, columns=['s1','s2'])
 df = pd.DataFrame(data, columns=['s1','s2']).to_numpy()
 
@@ -34,11 +34,11 @@ def plot(s1,s2,h_min_array):
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
     print('plot',s1,s2,h_min_array)
     # Make data.
-    X = np.arange(5000, 15000, 100)
-    Y = np.arange(5000, 15000, 100)
+    X = s1
+    Y = s2
     X, Y = np.meshgrid(X, Y)
-    R = np.sqrt(X**2 + Y**2)
-    Z = np.sin(R)
+    h_min= np.array(h_min_array)
+    Z =   np.reshape(h_min,(1, h_min.size))
     # X=s1
     # Y=s2
     # X, Y = np.meshgrid(X, Y)
@@ -52,7 +52,7 @@ def plot(s1,s2,h_min_array):
                         linewidth=0, antialiased=False)
 
     # Customize the z axis.
-    ax.set_zlim(-1.01, 1.01)
+    ax.set_zlim(905,930)
     ax.zaxis.set_major_locator(LinearLocator(10))
     # A StrMethodFormatter is used automatically
 
