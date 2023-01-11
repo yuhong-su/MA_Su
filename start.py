@@ -31,40 +31,49 @@ print('s2',s2)
 
 
 def plot(s1,s2,h_min_array):
-    fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
-    print('plot',s1,s2,h_min_array)
-    # Make data.
+    print('plot-s1',s1,'plot-s2',s2,'plot-h_min',h_min_array)
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
     X = s1
-    Y = s2
-    X, Y = np.meshgrid(X, Y)
-    h_min= np.array(h_min_array)
-    Z =   np.reshape(h_min,(1, h_min.size))
-    # X=s1
-    # Y=s2
-    # X, Y = np.meshgrid(X, Y)
-    # R = np.sqrt(X**2 + Y**2)
-    # print('h_min1',h_min_array)
-    # print('h_min2', np.array(h_min_array))
-    # R = np.sqrt(X**2 + Y**2)
-    # Z =  Z = np.sin(R)
-    # Plot the surface.
-    surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
-                        linewidth=0, antialiased=False)
+    Y=s2
+    Z=h_min_array
 
-    # Customize the z axis.
-    ax.set_zlim(905,930)
-    ax.zaxis.set_major_locator(LinearLocator(10))
-    # A StrMethodFormatter is used automatically
+    ax.plot(X, Y, Z,color='blue',marker='o', alpha=1)
 
-    ax.zaxis.set_major_formatter('{x:.02f}')
+    ax.set_xlabel('s1')
+    ax.set_ylabel('s2')
+    ax.set_zlabel('h_min')
 
-    # Add a color bar which maps values to colors.
-    fig.colorbar(surf, shrink=0.5, aspect=5)
-    ax.set_xlabel('s1', fontsize=15, rotation=60)
-    ax.set_ylabel('s2', fontsize=15, rotation=60)
-    ax.set_zlabel('hmin', fontsize=15, rotation=60)
-    print('h_min',s1,s2,h_min_array)
     plt.show()
+    # fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+    # print('plot',s1,s2,h_min_array)
+    # # Make data.
+    # X =s1
+    # Y =s2
+    # X, Y = np.meshgrid(X, Y)
+    # h_min= np.array(h_min_array)
+    #Z =   np.reshape(h_min,(1, h_min.size))
+
+    # # Plot the surface.
+    # # surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
+    # #                     linewidth=0, antialiased=False)
+
+
+    # # Customize the z axis.
+    # ax.set_zlim(1,5)
+    # ax.zaxis.set_major_locator(LinearLocator(10))
+    # # A StrMethodFormatter is used automatically
+
+    # ax.zaxis.set_major_formatter('{x:.02f}')
+
+    # # Add a color bar which maps values to colors.
+    # fig.colorbar(surf, shrink=0.5, aspect=5)
+    # ax.set_xlabel('s1', fontsize=15, rotation=60)
+    # ax.set_ylabel('s2', fontsize=15, rotation=60)
+    # ax.set_zlabel('hmin', fontsize=15, rotation=60)
+    # print('h_min',s1,s2,h_min_array)
+    # plt.show()
 
 
 theta1 = math.pi/4
