@@ -5,14 +5,12 @@ import math
 ## pip3 install -r requirements.txt
 ## pip freeze > requirements.txt
 
-## run the project 
-## python start.py
+from matplotlib.animation import FuncAnimation
 
-# importing libraries
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator
 import numpy as np
-# C:\Users\lenovo\Desktop\yuhong_thesis\data\sample.xlsx
+from matplotlib import animation
 
 data = pd.read_excel('data/sample.xlsx')
 sensor_values=pd.DataFrame(data, columns=['s1','s2'])
@@ -24,28 +22,26 @@ s1=sensor_values['s1'].to_numpy()
 s2=sensor_values['s2'].to_numpy()
 print('df',df)
 
-# sensors =df.to_dict('sensor')
 print('s1',s1)
 print('s2',s2)
-# print('sensors',sensors)
 
 
-def plot(s1,s2,h_min_array):
-    print('plot-s1',s1,'plot-s2',s2,'plot-h_min',h_min_array)
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
+# def plot(s1,s2,h_min_array):
+#     print('plot-s1',s1,'plot-s2',s2,'plot-h_min',h_min_array)
+#     fig = plt.figure()
+#     ax = fig.add_subplot(111, projection='3d')
 
-    X = s1
-    Y=s2
-    Z=h_min_array
+#     X = s1
+#     Y=s2
+#     Z=h_min_array
 
-    ax.plot(X, Y, Z,color='blue',marker='o', alpha=1)
+#     ax.plot(X, Y, Z,color='blue',marker='o', alpha=1)
 
-    ax.set_xlabel('s1')
-    ax.set_ylabel('s2')
-    ax.set_zlabel('h_min')
+#     ax.set_xlabel('s1')
+#     ax.set_ylabel('s2')
+#     ax.set_zlabel('h_min')
 
-    plt.show()
+#     plt.show()
     # fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
     # print('plot',s1,s2,h_min_array)
     # # Make data.
@@ -76,10 +72,48 @@ def plot(s1,s2,h_min_array):
     # plt.show()
 
 
+
+def animationPlot(s1,h_min_array):
+
+    fig = plt.figure(figsize=(12,8))
+    axes = fig.add_subplot(1,1,1)
+    # axes.set_ylim(230, 2500)
+    # axes.set_xlim(0, 10)
+    axes.set_title('Changes of h_min based on time', fontsize=20)
+
+    y1= h_min_array
+    # t= [0,1, 2, 3, 4, 5, 6,7] 
+    t=np.arange(0,s1.size,1)
+    print('t',t)
+    x,y = [], []
+
+    def animate(i):
+        x.append(t[i])
+        y.append((y1[i]))
+        plt.plot(x,y, scaley=True, scalex=True, label='change of h_min',color="blue",marker='o')
+
+
+    
+
+    ani = FuncAnimation(fig=fig, func=animate, interval=700)
+
+    plt.show()
+
+
+
+
+
+
+
+# Eingangsgroesse sind wie folgt definiert:
 theta1 = math.pi/4
 theta2 = math.pi/4
+# D in Einheit um
 D=85000
+# d in Einheit um
 d=80000
+
+# a1 und a2 sollen am Pruefstand gemessen werden, da nicht mehr moeglich ist, werden here jeweils 5000 um eingegeben.
 a1=5000
 a2=5000
 
@@ -111,10 +145,7 @@ def getVariables(s1,s2):
     return h_min
 
 def main():
-    # variable_s1 = int(input("Enter value for S1: "))
-    # variable_s2 = int(input("Enter value for S2: "))
 
-    # print("Hello World!","S1:", s1,"S2",s2)
     h_min_array=[]
     for sensor in df:
         h_min=getVariables(sensor[0],sensor[1])
@@ -122,9 +153,9 @@ def main():
         print('sensor',sensor)
     print('df',df)
     print('h_min',h_min_array)
-    plot(s1,s2,h_min_array)
-
-
+        # plot(s1,s2,h_min_array)
+    animationPlot(s1,h_min_array)
+    
 
 
 
