@@ -95,7 +95,7 @@ def animationPlot(s1,h_min_array):
 
     
 
-    ani = FuncAnimation(fig=fig, func=animate, interval=700)
+    ani = FuncAnimation(fig=fig, func=animate, interval=300)
 
     plt.show()
 
